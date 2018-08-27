@@ -1,4 +1,4 @@
 # motionDetector
-python script using the opencv library.
-Clone the repository
-run the script using python motion_detector.py
+2)Clone the repository
+
+3)run the script using python motion_detector.py
