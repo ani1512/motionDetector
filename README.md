@@ -1,4 +1,4 @@
 # motionDetector
-2)Clone the repository
+1)Clone the repository
 
-3)run the script using python motion_detector.py
+2)run the script using python motion_detector.py
