@@ -1,4 +1,5 @@
 import cv2, pandas
+import os
 from datetime import datetime
 
 first_frame = None
@@ -6,7 +7,14 @@ status_list = [None,None]
 times = []
 df = pandas.DataFrame(columns = ["Start","End"])
 
+try:
+    if not os.path.exists('data'):
+        os.makedirs('data')
+except OSError:
+    print ('Error: Creating directory of data')
+
 video = cv2.VideoCapture(0)
+currentFrame = 0
 
 
 while True:
@@ -57,6 +65,13 @@ while True:
             times.append(datetime.now())
     if status_list[-1] == 0 and status_list[-2] == 1:   #checks for the entry of an object
             times.append(datetime.now())
+            name = './data/frame' + str(currentFrame) + '.jpg'
+            print ('Creating...' + name)
+            cv2.imwrite(name, frame)
+
+            # To stop duplicate images
+            currentFrame += 1
+
 
 
     cv2.imshow("Capturing",frame)
