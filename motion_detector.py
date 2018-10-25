@@ -6,6 +6,7 @@ first_frame = None
 status_list = [None,None]
 times = []
 df = pandas.DataFrame(columns = ["Start","End"])
+frame_count = 1
 
 try:
     if not os.path.exists('data'):
@@ -61,18 +62,22 @@ while True:
 
     status_list.append(status)  #appends the current status of the object
 
-    if status_list[-1] == 1 and status_list[-2] == 0:   #checks for the exit of an object
+
+    if status_list[-1] == 1 and status_list[-2] == 0:   #checks for the entry of an object
             times.append(datetime.now())
-    if status_list[-1] == 0 and status_list[-2] == 1:   #checks for the entry of an object
+
+    if status_list[-1] == 0 and status_list[-2] == 1:   #checks for the exit of an object
             times.append(datetime.now())
-            name = './data/frame' + str(currentFrame) + '.jpg'
-            print ('Creating...' + name)
-            cv2.imwrite(name, frame)
+            frame_count = 1
 
-            # To stop duplicate images
-            currentFrame += 1
+    if status_list[-1] == 1 and status_list[-2] == 1 and frame_count <= 3: #checks for object in frame
+        name = './data/frame' + str(currentFrame) + '.jpg'
+        print ('Creating...' + name)
+        cv2.imwrite(name, frame)
 
-
+        # To stop duplicate images
+        currentFrame += 1
+        frame_count += 1
 
     cv2.imshow("Capturing",frame)
 
